@@ -83,6 +83,10 @@ call vundle#begin()
 " alternatively, pass a path where Vundle should install plugins
 "call vundle#begin('~/some/path/here')
 
+" cursor
+"set cursorcolumn
+set cursorline
+
 " molokai
 colorscheme molokai
 set t_Co=256
@@ -100,7 +104,12 @@ Plugin 'marijnh/tern_for_vim'
 "Plugin 'vim-scripts/vim-auto-save'
 Plugin 'artur-shaik/vim-javacomplete2'
 "Plugin 'vim-scripts/Vim-JDE'
-Plugin 'scrooloose/nerdtree'
+"Plugin 'scrooloose/nerdtree'
+Plugin 'Xuyuanp/git-nerdtree'
+Plugin 'Lokaltog/vim-powerline'
+Plugin 'Yggdroot/indentLine'
+"let g:NERDTreeUseSimpleIndicator = 1
+Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'mattn/emmet-vim'
 Plugin 'vim-scripts/taglist.vim'
 Plugin 'othree/yajs.vim'

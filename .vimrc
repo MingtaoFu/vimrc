@@ -1,38 +1,56 @@
-"语法高亮
+" 输入开括号时不展开折叠
+autocmd InsertEnter * if !exists('w:last_fdm') | let w:last_fdm=&foldmethod | setlocal foldmethod=manual | endif
+autocmd InsertLeave,WinLeave * if exists('w:last_fdm') | let &l:foldmethod=w:last_fdm | unlet w:last_fdm | endif
+
+set encoding=utf-8
+
+" 不换行
+set nowrap
+
+" 语法高亮
 syntax on
 set nu 
 let g:javascript_plugin_jsdoc = 1
 let g:javascript_plugin_flow = 1
 let g:javascript_plugin_ngdoc = 1
 set foldmethod=syntax
-let g:javascript_conceal_function       = "ƒ"
-let g:javascript_conceal_null           = "ø"
-let g:javascript_conceal_this           = "@"
-let g:javascript_conceal_return         = "⇚"
-let g:javascript_conceal_undefined      = "¿"
-let g:javascript_conceal_NaN            = "ℕ"
-let g:javascript_conceal_prototype      = "¶"
-let g:javascript_conceal_static         = "•"
-let g:javascript_conceal_super          = "Ω"
-let g:javascript_conceal_arrow_function = "⇒"
+"let g:javascript_conceal_function       = "ƒ"
+"let g:javascript_conceal_null           = "ø"
+"let g:javascript_conceal_this           = "@"
+"let g:javascript_conceal_return         = "⇚"
+"let g:javascript_conceal_undefined      = "¿"
+"let g:javascript_conceal_NaN            = "ℕ"
+"let g:javascript_conceal_prototype      = "¶"
+"let g:javascript_conceal_static         = "•"
+"let g:javascript_conceal_super          = "Ω"
+"let g:javascript_conceal_arrow_function = "⇒"
+"
+
 
 "vim-js-indent
 let js_indent_flat_switch = 1
 
+
 "syntastic
+let g:syntastic_disabled_filetypes=['html']
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
 let g:syntastic_javascript_checkers = ['eslint']
 
+let g:syntastic_c_compiler = 'gcc'
+let g:syntastic_c_config_file = '.syntastic_c_config'
+let g:syntastic_c_no_include_search = 1
+let g:syntastic_c_compiler_options = '-std=gnu11'
+
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
-let g:syntastic_java_javac_custom_classpath_command = "ant -q path | grep echo | cut -f2- -d] | tr -d ' ' | tr ':' '\n'"
-"let g:syntastic_java_javac_classpath = 'lib/*'
+"let g:syntastic_java_javac_custom_classpath_command = "ant -q path | grep echo | cut -f2- -d] | tr -d ' ' | tr ':' '\n'"
+let g:syntastic_java_javac_classpath = 'lib/*'
 
 "autosave
 "let g:auto_save = 1  " enable AutoSave on Vim startup
@@ -58,7 +76,8 @@ endfunction
 map <C-n> :NERDTreeToggle<CR>
 
 "YCM
-let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py'
+let g:ycm_global_ycm_extra_conf = '/home/mingtao/.vim/bundle/YouCompleteMe/ycm/.ycm_extra_conf.py'
+" let g:ycm_seed_identifiers_with_syntax=1
 
 "tagList
 "let Tlist_Auto_Open=1
@@ -69,7 +88,7 @@ map <C-i> :TlistToggle<CR>
 
 set nocompatible              " be iMproved, required
 filetype off                  " required
-map <F12> :!ant run<CR>
+map <S-F9> :! sh ./run.sh<CR>
 
 " 分屏窗口移动, Smart way to move between windows
 map <C-j> <C-W>j
@@ -78,7 +97,7 @@ map <C-h> <C-W>h
 map <C-l> <C-W>l
 
 " set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
+set rtp+=/home/mingtao/.vim/bundle/Vundle.vim
 call vundle#begin()
 " alternatively, pass a path where Vundle should install plugins
 "call vundle#begin('~/some/path/here')
@@ -96,10 +115,12 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'tomasr/molokai'
 Plugin 'pangloss/vim-javascript'
 Plugin 'jason0x43/vim-js-indent'
+Plugin 'elzr/vim-json'
 Plugin 'heavenshell/vim-jsdoc'
 Plugin 'scrooloose/syntastic'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'marijnh/tern_for_vim'
+Plugin 'maksimr/vim-jsbeautify'
 "lugin 'vim-scripts/Conque-Shell'
 "Plugin 'vim-scripts/vim-auto-save'
 Plugin 'artur-shaik/vim-javacomplete2'
@@ -116,6 +137,13 @@ Plugin 'othree/yajs.vim'
 
 Plugin 'scrooloose/nerdcommenter'
 
+"md
+Plugin 'shime/vim-livedown'
+
+"latex
+Plugin 'xuhdev/vim-latex-live-preview'
+let g:livepreview_previewer = 'foxitreader'
+
 "php
 autocmd FileType php setlocal omnifunc=phpcomplete#CompletePHP
 "Plugin 'ervandew/supertab'
@@ -127,6 +155,11 @@ Plugin 'Shougo/vimproc.vim'
 Plugin 'Shougo/unite.vim'
 "Plugin 'm2mdas/phpcomplete-extended'
 
+autocmd VimEnter * SyntasticToggleMode " disable syntastic by default
+
+"json
+set conceallevel=3
+let g:vim_json_syntax_conceal = 0
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -142,3 +175,23 @@ filetype plugin indent on    " required
 "
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
+let g:input_toggle = 1
+function! Fcitx2en()
+   let s:input_status = system("fcitx-remote")
+   if s:input_status == 2
+      let g:input_toggle = 1
+      let l:a = system("fcitx-remote -c")
+   endif
+endfunction
+
+function! Fcitx2zh()
+   let s:input_status = system("fcitx-remote")
+   if s:input_status != 2 && g:input_toggle == 1
+      let l:a = system("fcitx-remote -o")
+      let g:input_toggle = 0
+   endif
+endfunction
+
+set timeoutlen=150
+autocmd InsertLeave * call Fcitx2en()
+"autocmd InsertEnter * call Fcitx2zh()

@@ -3,6 +3,7 @@ autocmd InsertEnter * if !exists('w:last_fdm') | let w:last_fdm=&foldmethod | se
 autocmd InsertLeave,WinLeave * if exists('w:last_fdm') | let &l:foldmethod=w:last_fdm | unlet w:last_fdm | endif
 
 set encoding=utf-8
+set expandtab
 
 " 不换行
 set nowrap
@@ -10,10 +11,10 @@ set nowrap
 " 语法高亮
 syntax on
 set nu 
-let g:javascript_plugin_jsdoc = 1
-let g:javascript_plugin_flow = 1
-let g:javascript_plugin_ngdoc = 1
-set foldmethod=syntax
+"let g:javascript_plugin_jsdoc = 1
+"let g:javascript_plugin_flow = 1
+"let g:javascript_plugin_ngdoc = 1
+"set foldmethod=syntax
 "let g:javascript_conceal_function       = "ƒ"
 "let g:javascript_conceal_null           = "ø"
 "let g:javascript_conceal_this           = "@"
@@ -26,6 +27,9 @@ set foldmethod=syntax
 "let g:javascript_conceal_arrow_function = "⇒"
 "
 
+" Enable folding
+set foldmethod=indent
+set foldlevel=99
 
 "vim-js-indent
 let js_indent_flat_switch = 1
@@ -113,17 +117,17 @@ set t_Co=256
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'tomasr/molokai'
-Plugin 'pangloss/vim-javascript'
+"Plugin 'pangloss/vim-javascript'
 Plugin 'jason0x43/vim-js-indent'
 Plugin 'elzr/vim-json'
 Plugin 'heavenshell/vim-jsdoc'
 Plugin 'scrooloose/syntastic'
 Plugin 'Valloric/YouCompleteMe'
-Plugin 'marijnh/tern_for_vim'
-Plugin 'maksimr/vim-jsbeautify'
+"Plugin 'marijnh/tern_for_vim'
+"Plugin 'maksimr/vim-jsbeautify'
 "lugin 'vim-scripts/Conque-Shell'
 "Plugin 'vim-scripts/vim-auto-save'
-Plugin 'artur-shaik/vim-javacomplete2'
+"Plugin 'artur-shaik/vim-javacomplete2'
 "Plugin 'vim-scripts/Vim-JDE'
 "Plugin 'scrooloose/nerdtree'
 Plugin 'Xuyuanp/git-nerdtree'
@@ -137,22 +141,24 @@ Plugin 'othree/yajs.vim'
 
 Plugin 'scrooloose/nerdcommenter'
 
+Plugin 'tmhedberg/SimpylFold'
+
 "md
-Plugin 'shime/vim-livedown'
+"Plugin 'shime/vim-livedown'
 
 "latex
-Plugin 'xuhdev/vim-latex-live-preview'
-let g:livepreview_previewer = 'foxitreader'
+"Plugin 'xuhdev/vim-latex-live-preview'
+"let g:livepreview_previewer = 'foxitreader'
 
 "php
 autocmd FileType php setlocal omnifunc=phpcomplete#CompletePHP
 "Plugin 'ervandew/supertab'
 "let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
-Plugin '2072/PHP-Indenting-for-VIm'
-Plugin 'StanAngeloff/php.vim'
-Plugin 'shawncplus/phpcomplete.vim'
-Plugin 'Shougo/vimproc.vim'
-Plugin 'Shougo/unite.vim'
+"Plugin '2072/PHP-Indenting-for-VIm'
+"Plugin 'StanAngeloff/php.vim'
+"Plugin 'shawncplus/phpcomplete.vim'
+"Plugin 'Shougo/vimproc.vim'
+"Plugin 'Shougo/unite.vim'
 "Plugin 'm2mdas/phpcomplete-extended'
 
 autocmd VimEnter * SyntasticToggleMode " disable syntastic by default
@@ -195,3 +201,5 @@ endfunction
 set timeoutlen=150
 autocmd InsertLeave * call Fcitx2en()
 "autocmd InsertEnter * call Fcitx2zh()
+
+"let g:ycm_path_to_python_interpreter = '/usr/bin/python'

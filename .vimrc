@@ -143,6 +143,9 @@ Plugin 'scrooloose/nerdcommenter'
 
 Plugin 'tmhedberg/SimpylFold'
 
+"prototxt
+Plugin 'chiphogg/vim-prototxt'
+
 "md
 "Plugin 'shime/vim-livedown'
 

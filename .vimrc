@@ -4,6 +4,7 @@ autocmd InsertLeave,WinLeave * if exists('w:last_fdm') | let &l:foldmethod=w:las
 
 set encoding=utf-8
 set expandtab
+set backspace=2
 
 " 不换行
 set nowrap
@@ -11,21 +12,8 @@ set nowrap
 " 语法高亮
 syntax on
 set nu 
-"let g:javascript_plugin_jsdoc = 1
-"let g:javascript_plugin_flow = 1
-"let g:javascript_plugin_ngdoc = 1
-"set foldmethod=syntax
-"let g:javascript_conceal_function       = "ƒ"
-"let g:javascript_conceal_null           = "ø"
-"let g:javascript_conceal_this           = "@"
-"let g:javascript_conceal_return         = "⇚"
-"let g:javascript_conceal_undefined      = "¿"
-"let g:javascript_conceal_NaN            = "ℕ"
-"let g:javascript_conceal_prototype      = "¶"
-"let g:javascript_conceal_static         = "•"
-"let g:javascript_conceal_super          = "Ω"
-"let g:javascript_conceal_arrow_function = "⇒"
-"
+
+let NERDTreeIgnore = ['\.pyc$']
 
 " Enable folding
 set foldmethod=indent
@@ -36,25 +24,25 @@ let js_indent_flat_switch = 1
 
 
 "syntastic
-let g:syntastic_disabled_filetypes=['html']
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+"let g:syntastic_disabled_filetypes=['html']
+"set statusline+=%#warningmsg#
+"set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%*
 
-let g:syntastic_javascript_checkers = ['eslint']
+"let g:syntastic_javascript_checkers = ['eslint']
 
-let g:syntastic_c_compiler = 'gcc'
-let g:syntastic_c_config_file = '.syntastic_c_config'
-let g:syntastic_c_no_include_search = 1
-let g:syntastic_c_compiler_options = '-std=gnu11'
+"let g:syntastic_c_compiler = 'gcc'
+"let g:syntastic_c_config_file = '.syntastic_c_config'
+"let g:syntastic_c_no_include_search = 1
+"let g:syntastic_c_compiler_options = '-std=gnu11'
 
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
+"let g:syntastic_always_populate_loc_list = 1
+"let g:syntastic_auto_loc_list = 1
+"let g:syntastic_check_on_open = 1
+"let g:syntastic_check_on_wq = 0
 
-"let g:syntastic_java_javac_custom_classpath_command = "ant -q path | grep echo | cut -f2- -d] | tr -d ' ' | tr ':' '\n'"
-let g:syntastic_java_javac_classpath = 'lib/*'
+"let g:syntastic_java_javac_custom_classpath_command = 'ant -q path | grep echo | cut -f2- -d] | tr -d \' \' | tr \':\' '\n''
+"let g:syntastic_java_javac_classpath = 'lib/*'
 
 "autosave
 "let g:auto_save = 1  " enable AutoSave on Vim startup
@@ -82,6 +70,7 @@ map <C-n> :NERDTreeToggle<CR>
 "YCM
 let g:ycm_global_ycm_extra_conf = '/home/mingtao/.vim/bundle/YouCompleteMe/ycm/.ycm_extra_conf.py'
 " let g:ycm_seed_identifiers_with_syntax=1
+let g:ycm_python_binary_path = 'python'
 
 "tagList
 "let Tlist_Auto_Open=1
@@ -111,17 +100,24 @@ call vundle#begin()
 set cursorline
 
 " molokai
-colorscheme molokai
+"colorscheme molokai
+"
+Plugin 'morhetz/gruvbox'
+"let g:gruvbox_italic=1
+colorscheme gruvbox
+set background=dark
 set t_Co=256
+"Plugin 'SpaceVim/SpaceVim-theme'
+"colorscheme SpaceVim
 
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'tomasr/molokai'
+"Plugin 'tomasr/molokai'
 "Plugin 'pangloss/vim-javascript'
 Plugin 'jason0x43/vim-js-indent'
 Plugin 'elzr/vim-json'
-Plugin 'heavenshell/vim-jsdoc'
-Plugin 'scrooloose/syntastic'
+"Plugin 'heavenshell/vim-jsdoc'
+"Plugin 'scrooloose/syntastic'
 Plugin 'Valloric/YouCompleteMe'
 "Plugin 'marijnh/tern_for_vim'
 "Plugin 'maksimr/vim-jsbeautify'
@@ -131,7 +127,7 @@ Plugin 'Valloric/YouCompleteMe'
 "Plugin 'vim-scripts/Vim-JDE'
 "Plugin 'scrooloose/nerdtree'
 Plugin 'Xuyuanp/git-nerdtree'
-Plugin 'Lokaltog/vim-powerline'
+"Plugin 'Lokaltog/vim-powerline'
 Plugin 'Yggdroot/indentLine'
 "let g:NERDTreeUseSimpleIndicator = 1
 Plugin 'jistr/vim-nerdtree-tabs'
@@ -139,12 +135,14 @@ Plugin 'mattn/emmet-vim'
 Plugin 'vim-scripts/taglist.vim'
 Plugin 'othree/yajs.vim'
 
-Plugin 'scrooloose/nerdcommenter'
+"Plugin 'Shougo/deoplete.nvim'
+
+"Plugin 'roxma/nvim-yarp'
+"Plugin 'roxma/vim-hug-neovim-rpc'
+"let g:deoplete#enable_at_startup = 1
+"Plugin 'davidhalter/jedi-vim'
 
 Plugin 'tmhedberg/SimpylFold'
-
-"prototxt
-Plugin 'chiphogg/vim-prototxt'
 
 "md
 "Plugin 'shime/vim-livedown'
@@ -164,11 +162,29 @@ autocmd FileType php setlocal omnifunc=phpcomplete#CompletePHP
 "Plugin 'Shougo/unite.vim'
 "Plugin 'm2mdas/phpcomplete-extended'
 
-autocmd VimEnter * SyntasticToggleMode " disable syntastic by default
+"autocmd VimEnter * SyntasticToggleMode " disable syntastic by default
 
 "json
 set conceallevel=3
 let g:vim_json_syntax_conceal = 0
+
+Plugin 'Shougo/vimproc.vim'
+Plugin 'Shougo/vimshell.vim'
+
+Plugin 'Vimjas/vim-python-pep8-indent'
+Plugin 'scrooloose/nerdcommenter'
+let g:NERDSpaceDelims=1
+"let mapleader=";"
+"filetype plugin on
+
+" 这些内容必须放在某个东西的下面，以前放在上面，失效了
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+let g:airline_theme="luna" 
+let g:airline_powerline_fonts = 1
+set laststatus=2
+
+
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required

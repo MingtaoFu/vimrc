@@ -90,10 +90,11 @@ map <C-h> <C-W>h
 map <C-l> <C-W>l
 
 " set the runtime path to include Vundle and initialize
-set rtp+=/home/mingtao/.vim/bundle/Vundle.vim
-call vundle#begin()
+" set rtp+=/home/mingtao/.vim/bundle/Vundle.vim
+" call vundle#begin()
 " alternatively, pass a path where Vundle should install plugins
 "call vundle#begin('~/some/path/here')
+call plug#begin('~/.vim/plugged')
 
 " cursor
 "set cursorcolumn
@@ -102,7 +103,7 @@ set cursorline
 " molokai
 "colorscheme molokai
 "
-Plugin 'morhetz/gruvbox'
+Plug 'morhetz/gruvbox'
 "let g:gruvbox_italic=1
 colorscheme gruvbox
 set background=dark
@@ -111,14 +112,16 @@ set t_Co=256
 "colorscheme SpaceVim
 
 " let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
+" Plugin 'VundleVim/Vundle.vim'
 "Plugin 'tomasr/molokai'
 "Plugin 'pangloss/vim-javascript'
-Plugin 'jason0x43/vim-js-indent'
-Plugin 'elzr/vim-json'
+Plug 'jason0x43/vim-js-indent'
+Plug 'elzr/vim-json'
 "Plugin 'heavenshell/vim-jsdoc'
 "Plugin 'scrooloose/syntastic'
-Plugin 'Valloric/YouCompleteMe'
+"Plugin 'Valloric/YouCompleteMe'
+"Plugin 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
 "Plugin 'marijnh/tern_for_vim'
 "Plugin 'maksimr/vim-jsbeautify'
 "lugin 'vim-scripts/Conque-Shell'
@@ -126,14 +129,14 @@ Plugin 'Valloric/YouCompleteMe'
 "Plugin 'artur-shaik/vim-javacomplete2'
 "Plugin 'vim-scripts/Vim-JDE'
 "Plugin 'scrooloose/nerdtree'
-Plugin 'Xuyuanp/git-nerdtree'
+Plug 'Xuyuanp/git-nerdtree'
 "Plugin 'Lokaltog/vim-powerline'
-Plugin 'Yggdroot/indentLine'
+Plug 'Yggdroot/indentLine'
 "let g:NERDTreeUseSimpleIndicator = 1
-Plugin 'jistr/vim-nerdtree-tabs'
-Plugin 'mattn/emmet-vim'
-Plugin 'vim-scripts/taglist.vim'
-Plugin 'othree/yajs.vim'
+Plug 'jistr/vim-nerdtree-tabs'
+Plug 'mattn/emmet-vim'
+Plug 'vim-scripts/taglist.vim'
+Plug 'othree/yajs.vim'
 
 "Plugin 'Shougo/deoplete.nvim'
 
@@ -142,7 +145,7 @@ Plugin 'othree/yajs.vim'
 "let g:deoplete#enable_at_startup = 1
 "Plugin 'davidhalter/jedi-vim'
 
-Plugin 'tmhedberg/SimpylFold'
+Plug 'tmhedberg/SimpylFold'
 
 "md
 "Plugin 'shime/vim-livedown'
@@ -168,18 +171,18 @@ autocmd FileType php setlocal omnifunc=phpcomplete#CompletePHP
 set conceallevel=3
 let g:vim_json_syntax_conceal = 0
 
-Plugin 'Shougo/vimproc.vim'
-Plugin 'Shougo/vimshell.vim'
+Plug 'Shougo/vimproc.vim'
+Plug 'Shougo/vimshell.vim'
 
-Plugin 'Vimjas/vim-python-pep8-indent'
-Plugin 'scrooloose/nerdcommenter'
+Plug 'Vimjas/vim-python-pep8-indent'
+Plug 'scrooloose/nerdcommenter'
 let g:NERDSpaceDelims=1
-"let mapleader=";"
+let mapleader=" "
 "filetype plugin on
 
 " 这些内容必须放在某个东西的下面，以前放在上面，失效了
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 let g:airline_theme="luna" 
 let g:airline_powerline_fonts = 1
 set laststatus=2
@@ -187,7 +190,8 @@ set laststatus=2
 
 
 " All of your Plugins must be added before the following line
-call vundle#end()            " required
+" call vundle#end()            " required
+call plug#end()
 filetype plugin indent on    " required
 " To ignore plugin indent changes, instead use:
 "filetype plugin on
@@ -222,3 +226,37 @@ autocmd InsertLeave * call Fcitx2en()
 "autocmd InsertEnter * call Fcitx2zh()
 
 "let g:ycm_path_to_python_interpreter = '/usr/bin/python'
+
+"function! Zoom ()
+"    " check if is the zoomed state (tabnumber > 1 && window == 1)
+"   if tabpagenr('$') > 1 && tabpagewinnr(tabpagenr(), '$') == 1
+"       let l:cur_winview = winsaveview()
+"       let l:cur_bufname = bufname('')
+"       tabclose
+"
+"       " restore the view
+"        if l:cur_bufname == bufname('')
+"            call winrestview(cur_winview)
+"        endif
+"    else
+"        tab split
+"    endif
+"endfunction
+"
+function! Zoom ()
+    " check if is the zoomed state (tabnumber > 1 && window == 1)
+    if tabpagenr('$') > 1 && tabpagewinnr(tabpagenr(), '$') == 1
+        let l:cur_winview = winsaveview()
+        let l:cur_bufname = bufname('')
+        tabclose
+
+        " restore the view
+        if l:cur_bufname == bufname('')
+            call winrestview(cur_winview)
+        endif
+    else
+        tab split
+    endif
+endfunction
+
+nmap <leader>; :call Zoom()<CR>

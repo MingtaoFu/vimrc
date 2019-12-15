@@ -9,6 +9,8 @@ set backspace=2
 " 不换行
 set nowrap
 
+set shell=/bin/sh
+
 " 语法高亮
 syntax on
 set nu 
